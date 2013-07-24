@@ -1,5 +1,10 @@
 @import url('ratchet.css');
 
-form {
+#loginout {
     margin: 10px;
+}
+
+.error {
+    color: red;
+    margin-bottom: 0.5em;
 }

@@ -2,8 +2,9 @@ define([
     'underscore',
     'backbone',
     'hammer',
-    'text!templates/AuthTemplate.html'
-], function(_, Backbone, Hammer, TabBarTemplate){
+    'text!templates/AuthTemplate.html',
+    'text!templates/LoginSuccessTemplate.html'
+], function(_, Backbone, Hammer, TabBarTemplate, LoginSuccessTemplate){
 
     var AuthView = Backbone.View.extend({
         el: $(".content"),
@@ -36,20 +37,32 @@ define([
         },
 
         tryAuth: function(params) {
+            var self = this;
+            var $error = $(".error");
+            if($error.length > 0) {
+                $error.remove();
+            }
             var clientToken = $fh.app_props.appid;
             $fh.auth({
                 "policyId": "API_Test",
                 "clientToken": clientToken,
                 "params": params
                 }, function(res) {
-                    alert("Logged In!");
+                    self.loginSuccess(res);
                     console.log("OK?",res);
-
                 }, function(msg, err) {
-                    alert("Not Logged In ;(");
+                    $("#loginout form").prepend('<p class="error">Authentication failed, please try again</p>');
                     console.log("Err?",msg,res);
 
                 });
+        },
+
+        loginSuccess: function(res) {
+            if(!res.userId) {
+                res.userId = "localUser";
+            }
+            var compiledTemplate = _.template( LoginSuccessTemplate, res );
+            $("#loginout").html( compiledTemplate );
         }
     });
     return AuthView;
