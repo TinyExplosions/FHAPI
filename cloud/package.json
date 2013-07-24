@@ -1,0 +1,7 @@
+{
+  "name": "FH-API",
+  "version": "0.0.9",
+  "dependencies" : {   
+      "fh-nodeapp": "*"
+  }
+}

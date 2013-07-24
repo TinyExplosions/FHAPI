@@ -1,0 +1,10 @@
+<ul class="tab-inner">
+    <% _.each( items, function( item ){ %>
+        <li id="<%= item.title %>" class="tab-item">
+            <a href="<%= item.href %>">
+                <img class="tab-icon" src="images/<%= item.icon %>">
+                <div class="tab-label"><%= item.title %></div>
+            </a>
+        </li>
+    <% }); %>
+</ul>
