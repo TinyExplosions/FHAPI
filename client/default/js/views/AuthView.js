@@ -28,7 +28,7 @@ define([
         formSubmit: function() {
             console.log("submitting?");
             var params = {
-                username: $("#username").val(),
+                userId: $("#username").val(),
                 password: $("#password").val()
             };
             this.tryAuth(params);
