@@ -1,1 +1,5 @@
 @import url('ratchet.css');
+
+form {
+    margin: 10px;
+}

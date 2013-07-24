@@ -5,8 +5,9 @@ define([
     'backbone',
     'views/HeaderView',
     'views/TabBarView',
-    'views/ActionsView'
-], function($, _, Backbone, HeaderView, TabBarView, ActionsView) {
+    'views/ActionsView',
+    'views/AuthView'
+], function($, _, Backbone, HeaderView, TabBarView, ActionsView, AuthView) {
 
     var Router = Backbone.Router.extend({
         routes: {
@@ -28,6 +29,7 @@ define([
 
         auth: function() {
             this.pageSelect("Authentication");
+            var authView = new AuthView().render();
         },
 
         act: function() {
