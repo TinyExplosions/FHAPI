@@ -5,9 +5,11 @@ define([
     'backbone',
     'views/HeaderView',
     'views/TabBarView',
+    'views/HomeView',
     'views/ActionsView',
-    'views/AuthView'
-], function($, _, Backbone, HeaderView, TabBarView, ActionsView, AuthView) {
+    'views/AuthView',
+    'views/DbView'
+], function($, _, Backbone, HeaderView, TabBarView, HomeView, ActionsView, AuthView, DbView) {
 
     var Router = Backbone.Router.extend({
         routes: {
@@ -15,7 +17,8 @@ define([
             "home": "home",
             "auth": "auth",
             "act": "act",
-            "db": "db"
+            "db": "db",
+            "webview": "webView"
         },
 
         initialize: function(options) {
@@ -25,6 +28,7 @@ define([
 
         home: function() {
             this.pageSelect("Home");
+            var homeView = new HomeView().render();
         },
 
         auth: function() {
@@ -39,6 +43,21 @@ define([
 
         db: function() {
             this.pageSelect("Database");
+            var dbView = new DbView().render();
+        },
+
+        webView: function() {
+            this.pageSelect("WebView");
+            $fh.web({
+              url: 'http://docs.feedhenry.com/',
+              method: 'GET',
+              charset: 'UTF-8',
+              contentType: 'text/json',
+              period: 360000
+            }, function(res) {
+              var data = res.body;
+              // console.log("Response is " + data);
+            });
         },
 
         pageSelect: function(page) {

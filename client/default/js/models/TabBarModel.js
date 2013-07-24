@@ -27,8 +27,8 @@ define([
                 icon: "icon-settings.png"
             },
             {
-                title: "Something",
-                href: "#home",
+                title: "WebView",
+                href: "#webview",
                 icon: "icon-settings.png"
             }
         ]
