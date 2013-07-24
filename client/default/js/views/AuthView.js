@@ -3,8 +3,9 @@ define([
     'backbone',
     'hammer',
     'text!templates/AuthTemplate.html',
+    'text!templates/AuthFormTemplate.html',
     'text!templates/LoginSuccessTemplate.html'
-], function(_, Backbone, Hammer, TabBarTemplate, LoginSuccessTemplate){
+], function(_, Backbone, Hammer, AuthTemplate, AuthFormTemplate, LoginSuccessTemplate){
 
     var AuthView = Backbone.View.extend({
         el: $(".content"),
@@ -14,14 +15,22 @@ define([
         },
 
         events: {
-            'tap form a': 'formSubmit',
-            'submit': 'formSubmit'
+            'tap a.login': 'formSubmit',
+            'submit': 'formSubmit',
+            'tap a.logout': 'logout'
 
         },
 
         render: function() {
-            var compiledTemplate = _.template( TabBarTemplate, {} );
+            var compiledTemplate = _.template( AuthTemplate, {} );
             this.$el.html( compiledTemplate );
+            if(!App.SessionToken) {
+                compiledTemplate = _.template( AuthFormTemplate, {} );
+                $("#loginout").html( compiledTemplate );
+            } else {
+                compiledTemplate = _.template( LoginSuccessTemplate, {userId: App.UserId} );
+                $("#loginout").html( compiledTemplate );
+            }
             this.$el.hammer();
             return this;
         },
@@ -37,6 +46,7 @@ define([
         },
 
         tryAuth: function(params) {
+            $("#loginout a").text("Logging In...");
             var self = this;
             var $error = $(".error");
             if($error.length > 0) {
@@ -51,6 +61,7 @@ define([
                     self.loginSuccess(res);
                     console.log("OK?",res);
                 }, function(msg, err) {
+                    $("#loginout a").text("Login!");
                     $("#loginout form").prepend('<p class="error">Authentication failed, please try again</p>');
                     console.log("Err?",msg,res);
 
@@ -60,9 +71,17 @@ define([
         loginSuccess: function(res) {
             if(!res.userId) {
                 res.userId = "localUser";
+                res.sessionToken = "localToken";
             }
-            var compiledTemplate = _.template( LoginSuccessTemplate, res );
-            $("#loginout").html( compiledTemplate );
+            App.SessionToken = res.sessionToken;
+            App.UserId = res.userId;
+            this.render();
+        },
+
+        logout: function() {
+            App.SessionToken = null;
+            App.UserId = null;
+            this.render();
         }
     });
     return AuthView;
