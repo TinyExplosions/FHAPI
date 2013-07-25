@@ -48,16 +48,10 @@ define([
 
         webView: function() {
             this.pageSelect("WebView");
-            $fh.web({
-              url: 'http://docs.feedhenry.com/',
-              method: 'GET',
-              charset: 'UTF-8',
-              contentType: 'text/json',
-              period: 360000
-            }, function(res) {
-              var data = res.body;
-              // console.log("Response is " + data);
-            });
+            $fh.webview({
+                "url": "http://docs.feedhenry.com",
+                "title": "FH Docs"
+            }, function(res){}, function(res){});
         },
 
         pageSelect: function(page) {
