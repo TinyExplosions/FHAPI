@@ -2,7 +2,7 @@
 define([
     'backbone',
     'connectivityFsm',
-    'actManagementFsm',
+    'actManagementFSM',
     'stethoscope',
     'sync'
 ], function(Backbone, ConnectivityFsm, ActManagementFsm, Stethoscope, Sync){
