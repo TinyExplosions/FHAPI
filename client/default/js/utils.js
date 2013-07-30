@@ -4,8 +4,10 @@ define([
     'connectivityFsm',
     'actManagementFSM',
     'stethoscope',
-    'sync'
-], function(Backbone, ConnectivityFsm, ActManagementFsm, Stethoscope, Sync){
+    'sync',
+    'views/AlertView',
+    'models/AlertModel'
+], function(Backbone, ConnectivityFsm, ActManagementFsm, Stethoscope, Sync, AlertView,AlertModel){
 
     var initialize = function(options){
         var self = this;
@@ -21,8 +23,12 @@ define([
     var _transition = function(data) {
         $("body").removeClass("offline");
         console.log("Transitioning",data.toState);
-        if(data.toState !== "online") {
+        if(data.toState === "offline") {
             $("body").addClass("offline");
+        }
+        if(data.toState === "noCloud") {
+            var alertModel = new AlertModel({title: "No Cloud"});
+            App.AlertView = new AlertView({model:alertModel});
         }
     };
 

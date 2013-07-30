@@ -5,7 +5,7 @@ define( [
 ], function ( $, machina, _ ) {
 
   var useStethoscope = function ( fsm, steth ) {
-    _.each( ['heartbeat', 'no-heartbeat'], function ( eventName ) {
+    _.each( ['heartbeat', 'no-heartbeat', 'no-cloud'], function ( eventName ) {
       steth.on( eventName, function () {
         fsm.handle( eventName );
       } );
@@ -48,14 +48,23 @@ define( [
                             useStethoscope( this, this.stethoscope );
               this.wiredUp = true;
                         }
-            this.stethoscope.checkHeartbeat();
+             this.stethoscope.checkHeartbeat();
                     },
                     "heartbeat" : "online",
                     "no-heartbeat" : "disconnected",
                     "go.offline" : "offline",
+                    "no-cloud" : "noCloud",
                     "*" : function () {
                         this.deferUntilTransition();
                     }
+                },
+
+                noCloud : {
+                    "window.online"        : "probing",
+                    "appCache.downloading" : "probing",
+                    "go.online"            : "probing",
+                    "device.resume"        : "probing",
+                    "go.offline"           : "offline"
                 },
 
                 online : {
@@ -77,6 +86,7 @@ define( [
                 offline : {
                     "go.online" : "probing"
                 }
+
             },
             // wrapper functions to allow App.httpConnectivity.goOnline(); and App.httpConnectivity.goOffline();
             // as convienience functions.

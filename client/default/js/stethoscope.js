@@ -1,6 +1,6 @@
 define( [
-    'backbone',
-    'jquery'
+'backbone',
+'jquery'
 ], function ( Backbone, $ ) {
 
     var Stethoscope = function ( heartbeatDef ) {
@@ -15,16 +15,35 @@ define( [
         checkHeartbeat : function () {
             var self = this;
             self.trigger( 'checking-heartbeat' );
+            self.checkCloud(function(){
+                self.trigger( 'heartbeat' );
+            },function(){
+                self.checkNetwork(function(){
+                    self.trigger( 'no-cloud' );
+                },function(){
+                    self.trigger( 'no-heartbeat' );
+                });
+            });
+        },
+
+        checkCloud: function(success, error) {
             $fh.act({
                 act: "heartbeat",
                 req: {}
             }, function(res){
-                self.trigger( 'heartbeat' );
+                return success();
             }, function(err){
-                self.trigger( 'no-heartbeat' );
+                return error();
             });
+
+        },
+        checkNetwork: function(success, error) {
+            var img = new Image();
+            img.onload = function() {return success();};
+            img.onerror = function() {return error();};
+            img.src = "http://www.feedhenry.com/wp-content/themes/feedhenry/images/logo.gif";
         }
-    } );
+    });
 
     return Stethoscope;
 } );
