@@ -8,8 +8,9 @@ define([
     'views/HomeView',
     'views/ActionsView',
     'views/AuthView',
-    'views/DbView'
-], function($, _, Backbone, HeaderView, TabBarView, HomeView, ActionsView, AuthView, DbView) {
+    'views/DbView',
+    'views/WebViewView'
+], function($, _, Backbone, HeaderView, TabBarView, HomeView, ActionsView, AuthView, DbView, WebViewView) {
 
     var Router = Backbone.Router.extend({
         routes: {
@@ -48,10 +49,7 @@ define([
 
         webView: function() {
             this.pageSelect("WebView");
-            $fh.webview({
-                "url": "http://docs.feedhenry.com",
-                "title": "FH Docs"
-            }, function(res){}, function(res){});
+            var webViewView = new WebViewView().render();
         },
 
         pageSelect: function(page) {

@@ -22,14 +22,14 @@ define([
                 icon: "icon-settings.png"
             },
             {
-                title: "Database",
+                title: "CRUD",
                 href: "#db",
                 icon: "icon-settings.png"
             },
             {
                 title: "WebView",
                 href: "#webview",
-                icon: "icon-settings.png"
+                icon: "compass.png"
             }
         ]
     }

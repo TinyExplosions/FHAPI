@@ -9,6 +9,10 @@ define([
         el: $("header.bar-title"),
         model: new HeaderModel(),
 
+        events: {
+            'click .toggleConnection': 'toggleConnection'
+        },
+
         initialize: function(options) {
             this.render = _.bind(this.render, this);
             this.model.bind('change', this.render);
@@ -18,6 +22,15 @@ define([
             var compiledTemplate = _.template( HeaderTemplate, this.model.attributes );
             this.$el.html( compiledTemplate );
             return this;
+        },
+
+        toggleConnection: function(evt) {
+            evt.preventDefault();
+            if(App.connnection.state === "online") {
+                App.connnection.goOffline();
+            } else {
+                App.connnection.goOnline();
+            }
         }
     });
     return HeaderView;

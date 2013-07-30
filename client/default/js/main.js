@@ -6,7 +6,9 @@ require.config({
         backbone: 'libs/backbone/backbone-min',
         underscore: 'libs/underscore/underscore-min',
         hammer: 'libs/hammer/jquery.hammer.min',
-        templates: '../templates'
+        templates: '../templates',
+        machina: 'libs/machina/machina',
+        sync: 'sync/fhSync'
     },
     shim: {
         'backbone': {
