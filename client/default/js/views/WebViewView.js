@@ -13,6 +13,7 @@ define([
 
         events: {
             "click a.webview": "openWebview",
+            "click a.external": "openExternal"
         },
 
         render: function() {
@@ -27,8 +28,12 @@ define([
                 "url": evt.target.href,
                 "title": evt.target.title
             }, function(res){}, function(res){});
+        },
+
+        openExternal: function(evt) {
+            evt.preventDefault();
+            window.open(evt.target.href, "_system");
         }
-        
     });
     return HomeView;
 
