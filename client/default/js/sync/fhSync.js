@@ -8,7 +8,11 @@ define( [
         var actcall;
         console.log("custom sync, method is",method);
 
-        if ( method === 'create' && model.actRoot) {
+        if ( method === 'read' && model.actRoot) {
+            actcall = method+model.actRoot; 
+            console.log("we're in the read Method!",actcall);
+            return doAct(actcall,method,model,options);
+        } else if ( method === 'create' && model.actRoot) {
             actcall = method+model.actRoot; //createTransaction or similar
             console.log("overridden create!");
             return doAct(actcall,method,model,options);
@@ -28,11 +32,6 @@ define( [
     var doAct = function(actcall,method,model,options) {
         App.ajaxManager.mayAct(actcall,model.toJSON(),function(res){
                 model.id = res.id;
-                if ( method === 'create') {
-                    App.offlineStore.save(model);
-                } else if ( method === 'update') {
-                    App.offlineStore.update(model);
-                }
                 if(res.error) {
                    return options.error(res.error);
                 }
@@ -40,17 +39,9 @@ define( [
                 return options.success(res);
             },
             function(err){
-                return actFailed(err, model, options);
+                return options.error(res);
             }
         );
-    }
-
-    var actFailed = function( err, model, options) {
-        console.log("ARRRGH",model);
-        // model.attributes.cid = model.cid;
-        // model.id = model.cid;
-        App.failedCalls.save(model);
-        return options.error(err);
-    }
+    };
 
 });

@@ -1,26 +1,29 @@
 <div class="content-padded">
-      <p class="welcome">$fh.act calls allow you to make AJAX requests back to the cloud from device. These can be entirely custom, and are usually used to send or receive information from the cloud</p>
+    <p>$fh.act is the main entrypoint to the cloud from a FeedHenry hybrid app. It allows you to call cloud side actions and perform requests to the cloud. In this sample application, we have also defined App.ajaxManager.mayAct which is a wrapper that allows calls to be queued for later sending if the device is offline.</p>
+    <p>Use the buttons below to demostrate the difference in behaviour. You will see results in the console.</p>
+    <p>A 'standard' $fh.act call</p>
+    <code>
+        $fh.act({<br/>
+        &nbsp;&nbsp;act: "testAct",<br/>
+        &nbsp;&nbsp;req: {<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;attributes: options<br/>
+        &nbsp;&nbsp;}<br/>
+        &nbsp;&nbsp;}, function(res){<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;console.log("Returned From Server");<br/>
+        &nbsp;&nbsp;}, function(err){<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;console.log("WAT!?");<br/>
+        });<br/>
+    </code>
+    <a href="#" class="fhAct button-block">$fh.act</a>
+    <p>mayAct -button presses will be queued and sent whan app is online, even if you navigate away from the page (use the 'Connection' button to fake online/offline states</p>
+    <code>
+        App.ajaxManager.mayAct("testAct",{<br/>
+        &nbsp;&nbsp;foo: "bar"<br/>
+        &nbsp;&nbsp;}, function(res){<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;console.log("Returned From Server");<br/>
+        &nbsp;&nbsp;}, function(err){<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;console.log("WAT!?");<br/>
+        });
+    </code>
+    <a href="#" class="mayAct button-main button-block">mayAct</a> 
 </div>
-
-<ul class="list inset">
-    <li>
-    <a href="http://maker.github.com/ratchet/">
-    <strong>Ratchet documentation</strong>
-    </a>
-    </li>
-    <li>
-    <a href="http://www.github.com/maker/ratchet/">
-    <strong>Ratchet on Github</strong>
-    </a>
-    </li>
-    <li>
-    <a href="https://groups.google.com/forum/#!forum/goratchet">
-    <strong>Ratchet Google group</strong>
-    </a>
-    </li>
-    <li>
-    <a href="http://www.twitter.com/GoRatchet">
-    <strong>Ratchet on Twitter</strong>
-    </a>
-    </li>
-</ul>

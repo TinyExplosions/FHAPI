@@ -22,8 +22,8 @@ define([
                 icon: "icon-settings.png"
             },
             {
-                title: "CRUD",
-                href: "#db",
+                title: "Sync",
+                href: "#sync",
                 icon: "icon-settings.png"
             },
             {

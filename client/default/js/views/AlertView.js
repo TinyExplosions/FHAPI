@@ -15,7 +15,8 @@ define([
         },
 
         events: {
-            'click .button-alert': 'close'
+            'click .button-alert': 'close',
+            'click .userSaved': 'userSaved'
         },
 
         render: function() {
@@ -29,6 +30,10 @@ define([
 
         close: function() {
             this.$el.removeClass("show");
+        },
+        
+        userSaved: function() {
+            App.router.navigate("sync",{trigger: true});
         }
     });
     return ActionsView;
