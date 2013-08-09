@@ -1,7 +1,13 @@
 {
-  "name": "FH-API",
-  "version": "0.0.9",
-  "dependencies" : {   
-      "fh-nodeapp": "*"
-  }
+    "name": "FH-API",
+    "version": "0.0.9",
+    "dependencies" : {   
+        "fh-nodeapp": "*"
+    },
+    "scripts": {
+        "test": "make test"
+    },
+    "devDependencies": {
+        "mocha": "0.3.x"
+    }
 }

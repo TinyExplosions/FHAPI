@@ -1,3 +1,10 @@
+var moment = require('moment');
+
+exports.testMoment = function(params, callback) {
+    var niceDate = moment().format('MMMM Do YYYY, h:mm:ss a');
+    console.log(niceDate);
+    return callback(null,{success:niceDate});
+}
 exports.heartbeat = function(params, callback) {
     return callback(null,{heartbeat:"success"});
 };
