@@ -7,5 +7,3 @@ describe('Array', function(){
     });
   });
 });
-
-console.log("test passed");
