@@ -1,5 +1,6 @@
 ENV_TEST = true;
 var assert = require('assert');
+var ooops = require('break');
 var heartbeat = require('./../main').heartbeat;
 var nextPrime = require('./index').nextPrime;
 var asyncPrime = require('./index').asyncPrime;
